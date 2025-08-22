@@ -1,0 +1,7 @@
+{
+  "name": "@webrtc-mesh/demo",
+  "version": "0.0.1",
+  "exports": {
+    "./main": "./main.ts"
+  }
+}

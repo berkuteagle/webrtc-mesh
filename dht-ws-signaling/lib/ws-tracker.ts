@@ -1,18 +1,22 @@
+import { Logger } from "@logtape/logtape";
+
 export class WebSocketTracker extends EventTarget {
   readonly #url: string;
+  readonly #logger: Logger;
   #socket: WebSocket | null = null;
   #unsubscribeCb: (() => void) | null = null;
 
-  constructor(url: string) {
+  constructor(url: string, logger: Logger) {
     super();
     this.#url = url;
+    this.#logger = logger;
   }
 
   #subscribe() {
     this.#unsubscribe();
     if (this.#socket) {
       const onMessage = (event: MessageEvent) => {
-        console.log(event);
+        this.#logger.info("Message", { event });
       };
 
       this.#socket.addEventListener("message", onMessage);
@@ -31,11 +35,13 @@ export class WebSocketTracker extends EventTarget {
     if (this.#socket) {
       return;
     }
+    this.#logger.info("Connecting to tracker: {url}", { url: this.#url });
     this.#socket = new WebSocket(this.#url);
     this.#subscribe();
   }
 
   stop() {
+    this.#logger.info("Disconnecting from tracker: {url}", { url: this.#url });
     this.#unsubscribe();
     this.#socket?.close();
     this.#socket = null;

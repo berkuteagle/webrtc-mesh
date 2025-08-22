@@ -1,6 +1,10 @@
 {
   "workspace": [
     "core",
-    "dht-ws-signaling"
-  ]
+    "dht-ws-signaling",
+    "demo"
+  ],
+  "imports": {
+    "@logtape/logtape": "jsr:@logtape/logtape@^1.0.4"
+  }
 }
