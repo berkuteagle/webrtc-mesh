@@ -1,3 +1,6 @@
 {
-  "workspace": ["core"]
+  "workspace": [
+    "core",
+    "dht-ws-signaling"
+  ]
 }

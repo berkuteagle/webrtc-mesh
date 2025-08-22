@@ -1,14 +1,14 @@
 export abstract class Signaling {
-    #selfId: string = "";
+  #selfId: string = "";
 
-    init(selfId: string): void {
-        this.#selfId = selfId;
-    }
+  init(selfId: string): void {
+    this.#selfId = selfId;
+  }
 
-    protected get selfId(): string {
-        return this.#selfId;
-    }
+  protected get selfId(): string {
+    return this.#selfId;
+  }
 
-    abstract start(): void;
-    abstract stop(): void;
+  abstract start(): void;
+  abstract stop(): void;
 }

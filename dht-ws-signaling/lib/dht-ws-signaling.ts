@@ -2,38 +2,38 @@ import { Signaling } from "@webrtc-mesh/core";
 import { WebSocketTracker } from "./ws-tracker.ts";
 
 export class DhtWsSignaling extends Signaling {
-    #trackers: WebSocketTracker[] = [];
+  #trackers: WebSocketTracker[] = [];
 
-    constructor(urls: string[] = DEFAULT_URLS) {
-        super();
+  constructor(urls: string[] = DEFAULT_URLS) {
+    super();
 
-        if (!urls.length) {
-            throw new Error("At least one tracker URL is required");
-        }
-
-        this.#trackers = urls.map((url) => new WebSocketTracker(url));
+    if (!urls.length) {
+      throw new Error("At least one tracker URL is required");
     }
 
-    override init(selfId: string) {
-        super.init(selfId);
-    }
+    this.#trackers = urls.map((url) => new WebSocketTracker(url));
+  }
 
-    start() {
-        this.#trackers.forEach((tracker) => {
-            tracker.start();
-        });
-    }
+  override init(selfId: string) {
+    super.init(selfId);
+  }
 
-    stop() {
-        this.#trackers.forEach((tracker) => {
-            tracker.stop();
-        });
-    }
+  start() {
+    this.#trackers.forEach((tracker) => {
+      tracker.start();
+    });
+  }
+
+  stop() {
+    this.#trackers.forEach((tracker) => {
+      tracker.stop();
+    });
+  }
 }
 
 export const DEFAULT_URLS = [
-    "wss://tracker.webtorrent.dev",
-    "wss://tracker.openwebtorrent.com",
-    "wss://tracker.btorrent.xyz",
-    "wss://tracker.files.fm:7073/announce",
+  "wss://tracker.webtorrent.dev",
+  "wss://tracker.openwebtorrent.com",
+  "wss://tracker.btorrent.xyz",
+  "wss://tracker.files.fm:7073/announce",
 ];
