@@ -7,16 +7,16 @@ await configure({
   loggers: [
     { category: ["logtape", "meta"], lowestLevel: "debug" },
     {
-      category: ["@webrtc-mesh/core"],
+      category: ["@webrtc-mesh"],
       lowestLevel: "info",
       sinks: ["console"],
     },
   ],
 });
 
-const node = new Node(
-  new DhtWsSignaling(),
-);
+const node = new Node({
+  signaling: new DhtWsSignaling(),
+});
 
 node.start();
 await new Promise((resolve) => setTimeout(resolve, 10000));

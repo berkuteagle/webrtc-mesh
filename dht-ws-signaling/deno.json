@@ -3,5 +3,8 @@
   "version": "0.0.1",
   "exports": {
     ".": "./mod.ts"
+  },
+  "imports": {
+    "@logtape/logtape": "jsr:@logtape/logtape@^1.0.4"
   }
 }

@@ -1,4 +1,4 @@
-import { Logger } from "@logtape/logtape";
+import type { Logger } from "@logtape/logtape";
 
 export class WebSocketTracker extends EventTarget {
   readonly #url: string;
@@ -6,10 +6,13 @@ export class WebSocketTracker extends EventTarget {
   #socket: WebSocket | null = null;
   #unsubscribeCb: (() => void) | null = null;
 
-  constructor(url: string, logger: Logger) {
+  constructor(options: {
+    url: string;
+    logger: Logger;
+  }) {
     super();
-    this.#url = url;
-    this.#logger = logger;
+    this.#url = options.url;
+    this.#logger = options.logger;
   }
 
   #subscribe() {

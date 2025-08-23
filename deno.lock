@@ -9,8 +9,22 @@
     }
   },
   "workspace": {
-    "dependencies": [
-      "jsr:@logtape/logtape@^1.0.4"
-    ]
+    "members": {
+      "core": {
+        "dependencies": [
+          "jsr:@logtape/logtape@^1.0.4"
+        ]
+      },
+      "demo": {
+        "dependencies": [
+          "jsr:@logtape/logtape@^1.0.4"
+        ]
+      },
+      "dht-ws-signaling": {
+        "dependencies": [
+          "jsr:@logtape/logtape@^1.0.4"
+        ]
+      }
+    }
   }
 }

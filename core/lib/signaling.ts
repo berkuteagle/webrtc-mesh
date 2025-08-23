@@ -4,15 +4,22 @@ import type { Logger } from "@logtape/logtape";
 
 export abstract class Signaling {
   readonly #id: string;
-  readonly #logger: Logger = getLogger(["@webrtc-mesh/core", "signaling"]);
+  readonly #logger: Logger;
   #selfId: string = "";
 
-  protected constructor(id: string) {
-    this.#id = id;
+  protected constructor(options: {
+    id: string;
+    logger?: Logger;
+  }) {
+    this.#id = options.id;
+    this.#logger = options.logger ?? getLogger([
+      "@webrtc-mesh",
+      "signaling",
+    ]);
   }
 
   init(selfId: string): void {
-    this.#logger.info("Initializing signaling ({id}) ...", { id: this.#id });
+    this.#logger.info("Initializing signaling ...");
     this.#selfId = selfId;
   }
 
