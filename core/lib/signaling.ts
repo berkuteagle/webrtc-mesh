@@ -14,7 +14,7 @@ export abstract class Signaling {
     this.#id = options.id;
     this.#logger = options.logger ?? getLogger([
       "@webrtc-mesh",
-      "signaling",
+      this.#id,
     ]);
   }
 

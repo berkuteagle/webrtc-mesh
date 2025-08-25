@@ -1,5 +1,5 @@
 {
-  "name": "@webrtc-mesh/dht-ws-signaling",
+  "name": "@webrtc-mesh/dht-udp-signaling",
   "version": "0.0.1",
   "exports": {
     ".": "./mod.ts"

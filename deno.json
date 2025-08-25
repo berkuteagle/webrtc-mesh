@@ -2,6 +2,7 @@
   "workspace": [
     "core",
     "dht-ws-signaling",
+    "dht-udp-signaling",
     "demo"
   ]
 }

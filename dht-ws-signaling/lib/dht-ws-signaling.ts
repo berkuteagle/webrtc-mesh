@@ -1,4 +1,3 @@
-import { getLogger } from "@logtape/logtape";
 import { Signaling } from "@webrtc-mesh/core";
 import { WebSocketTracker } from "./ws-tracker.ts";
 
@@ -12,10 +11,6 @@ export class DhtWsSignaling extends Signaling {
 
     super({
       id: "dht-ws-signaling",
-      logger: getLogger([
-        "@webrtc-mesh",
-        "dht-ws-signaling",
-      ]),
     });
 
     this.#trackers = urls.map((url) =>
@@ -23,18 +18,14 @@ export class DhtWsSignaling extends Signaling {
     );
   }
 
-  override init(selfId: string) {
-    super.init(selfId);
-  }
-
-  start() {
+  override start() {
     this.logger.info("Start trackers...");
     this.#trackers.forEach((tracker) => {
       tracker.start();
     });
   }
 
-  stop() {
+  override stop() {
     this.logger.info("Stop trackers...");
     this.#trackers.forEach((tracker) => {
       tracker.stop();

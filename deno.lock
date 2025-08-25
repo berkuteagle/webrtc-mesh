@@ -19,11 +19,6 @@
         "dependencies": [
           "jsr:@logtape/logtape@^1.0.4"
         ]
-      },
-      "dht-ws-signaling": {
-        "dependencies": [
-          "jsr:@logtape/logtape@^1.0.4"
-        ]
       }
     }
   }

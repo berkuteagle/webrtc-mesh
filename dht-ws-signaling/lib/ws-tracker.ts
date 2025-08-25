@@ -15,16 +15,43 @@ export class WebSocketTracker extends EventTarget {
     this.#logger = options.logger;
   }
 
+  #announce() {
+
+  }
+
   #subscribe() {
     this.#unsubscribe();
     if (this.#socket) {
+      const onOpen = (event: Event) => {
+        this.#logger.info("Opened connection with {url}", {
+          url: event.target.url,
+        });
+      };
+
+      const onClose = (event: Event) => {
+        this.#logger.info("Closed connection with {url}", {
+          url: event.target.url,
+        });
+      };
+
       const onMessage = (event: MessageEvent) => {
         this.#logger.info("Message", { event });
       };
 
+      const onError = (event: Event) => {
+        this.#logger.error("Error [{url}]", { url: event.target.url });
+      };
+
       this.#socket.addEventListener("message", onMessage);
+      this.#socket.addEventListener("error", onError);
+      this.#socket.addEventListener("open", onOpen);
+      this.#socket.addEventListener("close", onClose);
+
       this.#unsubscribeCb = () => {
         this.#socket?.removeEventListener("message", onMessage);
+        this.#socket?.removeEventListener("error", onError);
+        this.#socket?.removeEventListener("open", onOpen);
+        this.#socket?.removeEventListener("close", onClose);
       };
     }
   }
