@@ -3,6 +3,7 @@
     "core",
     "dht-ws-signaling",
     "dht-udp-signaling",
+    "webrtc-transport",
     "demo"
   ]
 }

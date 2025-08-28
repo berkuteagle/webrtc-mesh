@@ -7,7 +7,9 @@ export class DhtUdpSignaling extends Signaling {
     });
   }
 
-  override start() {}
+  override async start(selfId: string, application: string) {
+    await super.start(selfId, application);
+  }
 
-  override stop() {}
+  override async stop() {}
 }

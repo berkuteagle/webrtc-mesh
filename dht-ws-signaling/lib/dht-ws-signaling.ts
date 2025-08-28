@@ -1,8 +1,10 @@
-import { Signaling } from "@webrtc-mesh/core";
+import { hash, Signaling } from "@webrtc-mesh/core";
 import { WebSocketTracker } from "./ws-tracker.ts";
 
 export class DhtWsSignaling extends Signaling {
   #trackers: WebSocketTracker[] = [];
+  #selfHash: string = "";
+  #applicationHash: string = "";
 
   constructor(urls: string[] = DEFAULT_URLS) {
     if (!urls.length) {
@@ -18,18 +20,23 @@ export class DhtWsSignaling extends Signaling {
     );
   }
 
-  override start() {
+  override async start(selfId: string, application: string) {
+    await super.start(selfId, application);
+
+    this.#selfHash = await hash(this.selfId);
+    this.#applicationHash = await hash(this.application);
+
     this.logger.info("Start trackers...");
-    this.#trackers.forEach((tracker) => {
-      tracker.start();
-    });
+    await Promise.all(
+      this.#trackers.map((tracker) =>
+        tracker.start(this.#selfHash, this.#applicationHash)
+      ),
+    );
   }
 
-  override stop() {
+  override async stop() {
     this.logger.info("Stop trackers...");
-    this.#trackers.forEach((tracker) => {
-      tracker.stop();
-    });
+    await Promise.all(this.#trackers.map((tracker) => tracker.stop()));
   }
 }
 

@@ -1,0 +1,7 @@
+{
+  "name": "@webrtc-mesh/webrtc-transport",
+  "version": "0.0.1",
+  "exports": {
+    ".": "./mod.ts"
+  }
+}

@@ -5,6 +5,8 @@ export class WebSocketTracker extends EventTarget {
   readonly #logger: Logger;
   #socket: WebSocket | null = null;
   #unsubscribeCb: (() => void) | null = null;
+  #selfHash: string = "";
+  #applicationHash: string = "";
 
   constructor(options: {
     url: string;
@@ -16,7 +18,14 @@ export class WebSocketTracker extends EventTarget {
   }
 
   #announce() {
-
+    if (this.#socket) {
+      this.#socket.send(JSON.stringify({
+        action: "announce",
+        downloaded: 0,
+        info_hash: this.#applicationHash,
+        peer_id: this.#selfHash,
+      }));
+    }
   }
 
   #subscribe() {
@@ -61,16 +70,20 @@ export class WebSocketTracker extends EventTarget {
     this.#unsubscribeCb = null;
   }
 
-  start() {
+  async start(selfHash: string, applicationHash: string) {
+    this.#selfHash = selfHash;
+    this.#applicationHash = applicationHash;
+
     if (this.#socket) {
       return;
     }
+
     this.#logger.info("Connecting to tracker: {url}", { url: this.#url });
     this.#socket = new WebSocket(this.#url);
     this.#subscribe();
   }
 
-  stop() {
+  async stop() {
     this.#logger.info("Disconnecting from tracker: {url}", { url: this.#url });
     this.#unsubscribe();
     this.#socket?.close();
